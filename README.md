@@ -79,4 +79,9 @@ Sigue estos pasos para ejecutar la aplicación en tu entorno local:
    ```bash
    npm run dev
    ```
-**Autor**:
+---
+
+## Autor
+- **Nombre**: Henry Steven Jaimes
+- **LinkedIn**: [linkedin.com/in/henry-steven-jaimes](https://linkedin.com/in/henry-steven-jaimes)
+- **GitHub**: [github.com/stevenjaimes](https://github.com/stevenjaimes)
