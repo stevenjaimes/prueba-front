@@ -1,22 +1,7 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    width: '600px',
-    padding: '20px',
-    borderRadius: '10px',
-    boxShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
-  },
-};
 
 interface PruebaTecnicaModalProps {
   isOpen: boolean;
@@ -24,6 +9,42 @@ interface PruebaTecnicaModalProps {
 }
 
 export function PruebaTecnicaModal({ isOpen, onRequestClose }: PruebaTecnicaModalProps) {
+  const [modalWidth, setModalWidth] = useState<string>('600px');
+
+  useEffect(() => {
+    // Función para actualizar el ancho del modal según el tamaño de la ventana
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setModalWidth('90%'); // Ancho del 90% en móviles
+      } else {
+        setModalWidth('600px'); // Ancho fijo en pantallas grandes
+      }
+    };
+
+    // Actualizar el ancho al cargar el componente
+    handleResize();
+
+    // Escuchar cambios en el tamaño de la ventana
+    window.addEventListener('resize', handleResize);
+
+    // Limpiar el event listener al desmontar el componente
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      width: modalWidth, // Ancho dinámico
+      padding: '20px',
+      borderRadius: '10px',
+      boxShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
+    },
+  };
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -36,12 +57,11 @@ export function PruebaTecnicaModal({ isOpen, onRequestClose }: PruebaTecnicaModa
     }
   }, []);
 
-
   useEffect(() => {
     if (isOpen) {
       const modalContent = document.querySelector('.ReactModal__Content');
       if (modalContent) {
-        (modalContent as HTMLElement).focus(); 
+        (modalContent as HTMLElement).focus();
       }
     }
   }, [isOpen]);
@@ -54,14 +74,14 @@ export function PruebaTecnicaModal({ isOpen, onRequestClose }: PruebaTecnicaModa
       contentLabel="Prueba Técnica Modal"
       aria={{
         labelledby: 'pruebaTecnicaModalTitle',
-        describedby: 'pruebaTecnicaModalDescription', 
+        describedby: 'pruebaTecnicaModalDescription',
       }}
       role="dialog"
-      aria-modal="true" 
-      shouldCloseOnOverlayClick={true} 
+      aria-modal="true"
+      shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
-      shouldFocusAfterRender={true} 
-      shouldReturnFocusAfterClose={true} 
+      shouldFocusAfterRender={true}
+      shouldReturnFocusAfterClose={true}
     >
       <h2 id="pruebaTecnicaModalTitle" className="text-2xl font-bold text-gray-900 mb-4">
         Prueba Técnica
