@@ -12,22 +12,22 @@ export function PruebaTecnicaModal({ isOpen, onRequestClose }: PruebaTecnicaModa
   const [modalWidth, setModalWidth] = useState<string>('600px');
 
   useEffect(() => {
-    // Función para actualizar el ancho del modal según el tamaño de la ventana
+   
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        setModalWidth('90%'); // Ancho del 90% en móviles
+        setModalWidth('90%'); 
       } else {
-        setModalWidth('600px'); // Ancho fijo en pantallas grandes
+        setModalWidth('600px'); 
       }
     };
 
-    // Actualizar el ancho al cargar el componente
+   
     handleResize();
 
-    // Escuchar cambios en el tamaño de la ventana
+
     window.addEventListener('resize', handleResize);
 
-    // Limpiar el event listener al desmontar el componente
+
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
@@ -39,7 +39,7 @@ export function PruebaTecnicaModal({ isOpen, onRequestClose }: PruebaTecnicaModa
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
-      width: modalWidth, // Ancho dinámico
+      width: modalWidth, 
       padding: '20px',
       borderRadius: '10px',
       boxShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
