@@ -1,22 +1,20 @@
 [build]
-
   command = "npm install && npm run build"
+  publish = ".next"  # Cambiado a .next para Next.js
 
-  publish = "out"
+[build.environment]
+  NODE_VERSION = "18"
 
-  [build.environment]
-    NODE_VERSION = "18" 
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
+# [[redirects]]  # Comentado o eliminado
+#   from = "/*"
+#   to = "/index.html"
+#   status = 200
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-
-[functions]
-  directory = "functions"  
-
+# [functions]  # Comentado o eliminado si no lo usas
+#   directory = "functions"
 
 [[headers]]
   for = "/*"
