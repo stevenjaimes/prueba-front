@@ -6,6 +6,8 @@ import { ListaProductos } from '@/componentes/ListaProductos';
 import { Header } from '@/componentes/Header';
 import { Footer } from '@/componentes/Footer';
 import { Producto } from '@/types/producto';
+import { ModalFormulario } from '@/componentes/ModalFormulario';
+import { PlusCircle } from 'lucide-react';
 
 function App() {
   const [productos, setProductos] = useState<Producto[]>([]);
@@ -13,6 +15,7 @@ function App() {
     key: keyof Producto;
     direccion: 'asc' | 'desc';
   }>({ key: 'codigo', direccion: 'asc' });
+  const [modalAbierto, setModalAbierto] = useState(false);
 
   const agregarProducto = (product: Producto) => {
     if (productos.some(p => p.codigo === product.codigo)) {
@@ -20,6 +23,7 @@ function App() {
       return;
     }
     setProductos([...productos, product]);
+    setModalAbierto(false); // Cerrar el modal después de agregar el producto
   };
 
   const eliminarProducto = (codigo: number) => {
@@ -49,10 +53,23 @@ function App() {
         <main className="flex-grow bg-white/40 backdrop-blur-sm">
           <div className="max-w-7xl mx-auto py-4 sm:py-6 px-4 sm:px-6 lg:px-8">
             <div className="sm:px-0">
+              <div className="lg:hidden flex justify-start mb-4">
+                <button
+                  onClick={() => setModalAbierto(true)}
+                  className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md shadow-lg hover:bg-blue-700 transition-colors"
+                  aria-label="Abrir formulario de producto"
+                >
+                  <PlusCircle size={20} />
+                  <span>Agregar Producto</span>
+                </button>
+              </div>
+
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
-                <div className="lg:col-span-1">
+
+                <div className="hidden lg:block lg:col-span-1">
                   <FormularioProducto onSubmit={agregarProducto} />
                 </div>
+
                 <div className="lg:col-span-2">
                   <ListaProductos
                     productos={productos}
@@ -67,6 +84,9 @@ function App() {
         </main>
         <Footer />
       </div>
+      <ModalFormulario isOpen={modalAbierto} onClose={() => setModalAbierto(false)}>
+        <FormularioProducto onSubmit={agregarProducto} />
+      </ModalFormulario>
     </div>
   );
 }
